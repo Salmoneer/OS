@@ -5,6 +5,8 @@
 #include <stdint.h>
 
 void terminal_initialize();
+void terminal_move_cursor();
+void terminal_backspace();
 void terminal_putc(char c);
 void terminal_print(const char* str);
 

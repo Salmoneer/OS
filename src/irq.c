@@ -1,19 +1,17 @@
 #include "irq.h"
 #include "isr.h"
 #include "idt.h"
-#include "vga.h"
+#include "stdio.h"
 #include "pic.h"
 #include "io.h"
+#include "keyboard.h"
 
 void int32() { /* Timer */
 
 }
 
 void int33() { /* Keyboard Handler */
-	terminal_print("KEYBOARD IRQ CALLED!!!!1!");
-	PIC_send_eoi(1);
-	unsigned char char_code = inportb(0x60);
-	terminal_putc(char_code);
+	keyboard_int_handler();
 }
 
 void int34(){}
