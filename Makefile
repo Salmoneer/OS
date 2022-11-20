@@ -17,9 +17,9 @@ KERNEL=kernel.bin
 all: bootload kernel build
 
 clean:
-	rm ./src/*.o
-	rm ./*.flp
-	rm ./bin/*.bin
+	rm -f ./src/*.o
+	rm -f ./*.flp
+	rm -f ./bin/*
 
 %.o: %.asm
 	$(ASM) -f elf32 -o $@ $<
@@ -36,3 +36,6 @@ kernel: $(KERNEL_OBJS)
 build: bootload kernel
 	dd if=bin/bootload.bin of=boot.flp bs=512 seek=0 &> /dev/null
 	dd if=bin/kernel.bin   of=boot.flp bs=512 seek=1 &> /dev/null
+
+run: build
+	qemu-system-i386 ./boot.flp
