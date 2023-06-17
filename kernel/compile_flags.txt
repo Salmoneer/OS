@@ -1,0 +1,6 @@
+-std=gnu99
+-O2
+-ffreestanding
+-nostdlib
+-Wall
+-Wextra
