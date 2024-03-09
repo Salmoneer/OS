@@ -20,16 +20,16 @@ OBJS=$(KERNEL_OBJS)
 all: clean kernel.bin
 
 kernel.bin: $(OBJS) $(KERNEL_ARCH_DIR)/link.ld
-    $(CC) -T $(KERNEL_ARCH_DIR)/link.ld -o $@ $(CCFLAGS) $(KERNEL_OBJS) -lk -lgcc
+	$(CC) -T $(KERNEL_ARCH_DIR)/link.ld -o $@ $(CCFLAGS) $(KERNEL_OBJS) -lk -lgcc
 
 .asm.o:
-    $(ASM) -f elf32 $< -o $@
+	$(ASM) -f elf32 $< -o $@
 
 .c.o:
-    $(CC) -MD -c $< -o $@ $(CCFLAGS) -lk -lgcc
+	$(CC) -MD -c $< -o $@ $(CCFLAGS) -lk -lgcc
 
 clean:
-    rm -f kernel.bin
-    find . \( -name '*.o' -or -name '*.d' \) -delete
+	rm -f kernel.bin
+	find . \( -name '*.o' -or -name '*.d' \) -delete
 
 -include $(OBJS:.o=.d)
