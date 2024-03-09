@@ -1,6 +1,6 @@
 ASM=nasm
 LD=i686-elf-ld
-CC=i686-elf-gcc --sysroot=/home/cam/coding/asm/os/sysroot/
+CC=i686-elf-gcc --sysroot=../sysroot
 
 ARCH=i386
 KERNEL_ARCH_DIR=arch/$(ARCH)
