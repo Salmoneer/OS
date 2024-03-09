@@ -1,29 +1,44 @@
-LD=i686-elf-gcc
-CC=i686-elf-gcc
+AR = i686-elf-ar
+CC = i686-elf-gcc
 
-CCFLAGS=-std=gnu99 -O2 -g -ffreestanding -Wall -Wextra -nostdlib -I include -I ../kernel/include -D __is_libk
+CCFLAGS = -std=gnu99 -O2 -g -ffreestanding -I include -I ../kernel/include -Wall -Wextra -nostdlib -D __is_libk
 
-OBJS=stdio/printf.o stdio/putchar.o stdio/puts.o
+BUILD_DIR = ./build
 
-.SUFFIXES: .c .o
+SYSROOT = ../sysroot
+
+
+LIBK = libk.a
+LIBK_SRCS = $(wildcard **/*.c)
+LIBK_OBJS = $(LIBK_SRCS:%.c=build/%.o)
+LIBK_DEPS = $(LIBK_OBJS:.o=.d)
+
+
+.PHONY: clean install
 
 all: clean libk.a install
 
-libk.a: $(OBJS)
-	$(AR) -crs $@ $(OBJS)
+libk.a: $(LIBK_OBJS)
+	$(AR) -crs $@ $(LIBK_OBJS)
 
-.c.o:
-	$(CC) -MD -c $< -o $@ $(CCFLAGS)
+build/%.o: %.c
+	mkdir -p $(@D)
+	$(CC) $(CCFLAGS) -MMD -c $< -o $@
 
-install:
-	mkdir -p ../sysroot/usr/include
-	cp -r include/. ../sysroot/usr/include/.
-	mkdir ../sysroot/usr/lib
-	cp libk.a ../sysroot/usr/lib/
+install: $(LIBK)
+	mkdir -p $(SYSROOT)/usr/lib
+	cp -r include $(SYSROOT)/usr/
+	cp $(LIBK) $(SYSROOT)/usr/lib/
 
 clean:
-	rm -rf ../sysroot
-	rm -f libk.a
-	find . \( -name '*.o' -or -name '*.d' \) -delete
+ifneq ($(wildcard $(LIBK)),)
+	rm $(LIBK)
+endif
+ifneq ($(wildcard $(SYSROOT)),)
+	rm -r $(SYSROOT)
+endif
+ifneq ($(wildcard $(BUILD_DIR)),)
+	rm -r $(BUILD_DIR)
+endif
 
--include $(OBJS:.o=.d)
+-include $(LINK_DEPS)

@@ -1,14 +1,17 @@
-ASM=nasm
+ASM = nasm
 
-BOOTLOAD=bootload.bin
-BOOTLOAD_SRCS=$(wildcard *.asm)
+BOOTLOAD = bootload.bin
+BOOTLOAD_SRCS = $(wildcard *.asm)
+
 
 .PHONY: clean
 
 all: clean $(BOOTLOAD)
 
 $(BOOTLOAD): $(BOOTLOAD_SRCS)
-	$(ASM) -f bin $^ -o $(BOOTLOAD)
+	$(ASM) -f bin $^ -o $@
 
 clean:
-	rm -rf $(BOOTLOAD)
+ifneq ($(wildcard $(BOOTLOAD)),)
+	rm $(BOOTLOAD)
+endif

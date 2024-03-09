@@ -1,7 +1,9 @@
-*.o
-*.d
-
 sysroot/
+
 bootload/bootload.bin
+
+kernel/build/
 kernel/kernel.bin
+
+libc/build/
 libc/libk.a

@@ -1,35 +1,47 @@
-ASM=nasm
-LD=i686-elf-ld
-CC=i686-elf-gcc --sysroot=../sysroot
+ASM = nasm
+CC = i686-elf-gcc --sysroot=../sysroot
 
-ARCH=i386
-KERNEL_ARCH_DIR=arch/$(ARCH)
+CCFLAGS = -std=gnu99 -O2 -g -ffreestanding -Iinclude -isystem '=/usr/include/' -iquote '=/usr/include/' -L '=/usr/lib/' -Wall -Wextra -nostdlib
+
+
+ARCH = i386
+KERNEL_ARCH_DIR = arch/$(ARCH)
+
+LINKER_CONFIG = $(KERNEL_ARCH_DIR)/link.ld
+
+
+BUILD_DIR = ./build
 
 include $(KERNEL_ARCH_DIR)/make.config
+KERNEL_GLOBAL_OBJS = kernel/kernel.o
+KERNEL_ALL_OBJS = $(KERNEL_GLOBAL_OBJS) $(KERNEL_ARCH_OBJS)
 
-CCFLAGS=-std=gnu99 -O2 -g -ffreestanding -Iinclude -isystem '=/usr/include/' -iquote '=/usr/include/' -L '=/usr/lib/' -Wall -Wextra -nostdlib
+KERNEL = kernel.bin
+KERNEL_OBJS = $(KERNEL_ALL_OBJS:%=$(BUILD_DIR)/%)
+KERNEL_DEPS = $(KERNEL_OBJS:.o=.d)
 
-KERNEL_OBJS=kernel/kernel.o $(KERNEL_ARCH_OBJS)
-
-OBJS=$(KERNEL_OBJS)
-
-.SUFFIXES: .c .asm .o
 
 .PHONY: clean
 
-all: clean kernel.bin
+all: clean $(KERNEL)
 
-kernel.bin: $(OBJS) $(KERNEL_ARCH_DIR)/link.ld
-	$(CC) -T $(KERNEL_ARCH_DIR)/link.ld -o $@ $(CCFLAGS) $(KERNEL_OBJS) -lk -lgcc
+$(KERNEL): $(KERNEL_OBJS) $(LINKER_CONFIG)
+	$(CC) $(CCFLAGS) -T $(LINKER_CONFIG) $(KERNEL_OBJS) -o $@ -lk -lgcc
 
-.asm.o:
+build/%.o: %.asm
+	mkdir -p $(@D)
 	$(ASM) -f elf32 $< -o $@
 
-.c.o:
-	$(CC) -MD -c $< -o $@ $(CCFLAGS) -lk -lgcc
+build/%.o: %.c
+	mkdir -p $(@D)
+	$(CC) $(CCFLAGS) -c $< -MMD -MP -o $@ -lk -lgcc
 
 clean:
-	rm -f kernel.bin
-	find . \( -name '*.o' -or -name '*.d' \) -delete
+ifneq ($(wildcard $(KERNEL)),)
+	rm $(KERNEL)
+endif
+ifneq ($(wildcard $(BUILD_DIR)),)
+	rm -r $(BUILD_DIR)
+endif
 
--include $(OBJS:.o=.d)
+-include $(KERNEL_DEPS)
