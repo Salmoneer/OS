@@ -1,0 +1,7 @@
+*.o
+*.d
+
+sysroot/
+bootload/bootload.bin
+kernel/kernel.bin
+libc/libk.a
