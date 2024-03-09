@@ -1,7 +1,7 @@
 AR = i686-elf-ar
 CC = i686-elf-gcc
 
-CCFLAGS = -std=gnu99 -O2 -g -ffreestanding -I include -I ../kernel/include -Wall -Wextra -nostdlib -D __is_libk
+CCFLAGS = -std=gnu99 -O2 -ffreestanding -I include -I ../kernel/include -Wall -Wextra -nostdlib -D __is_libk
 
 BUILD_DIR = ./build
 

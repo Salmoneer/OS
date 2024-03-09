@@ -1,7 +1,7 @@
 ASM = nasm
 CC = i686-elf-gcc --sysroot=../sysroot
 
-CCFLAGS = -std=gnu99 -O2 -g -ffreestanding -Iinclude -isystem '=/usr/include/' -iquote '=/usr/include/' -L '=/usr/lib/' -Wall -Wextra -nostdlib
+CCFLAGS = -std=gnu99 -O2 -ffreestanding -Iinclude -isystem '=/usr/include/' -iquote '=/usr/include/' -L '=/usr/lib/' -Wall -Wextra -nostdlib
 
 
 ARCH = i386

@@ -1,6 +1,13 @@
 -std=gnu99
 -O2
 -ffreestanding
--nostdlib
+-Iinclude
+-isystem
+'=/usr/include/'
+-iquote
+'=/usr/include/'
+-L
+'=/usr/lib/'
 -Wall
 -Wextra
+-nostdlib

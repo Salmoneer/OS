@@ -1,7 +1,9 @@
 -std=gnu99
 -O2
 -ffreestanding
--nostdlib
--D__is_libk
+-Iinclude
+-I../kernel/include
 -Wall
 -Wextra
+-nostdlib
+-D__is_libk
