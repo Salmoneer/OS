@@ -1,9 +1,9 @@
 COMPONENTS="bootload libc kernel"
 
 for COMPONENT in $COMPONENTS; do
-	cd $COMPONENT
-	make
-	cd ..
+    cd $COMPONENT
+    make
+    cd ..
 done
 
 dd if=/dev/zero of=boot.img bs=512 count=4096 status=none

@@ -20,15 +20,15 @@ char keyboard_layout[2][128] = {{
 };
 
 void keyboard_init() {
-	inb(0x60);
+    inb(0x60);
 }
 
 void keyboard_interrupt() {
-	uint8_t scancode = inb(0x60);
-	if (scancode == 0x2a)
-		shift = true;
-	else if (scancode == 0xaa)
-		shift = false;
-	else if (!(scancode & 0x80))
-		putchar(keyboard_layout[shift][scancode]);
+    uint8_t scancode = inb(0x60);
+    if (scancode == 0x2a)
+        shift = true;
+    else if (scancode == 0xaa)
+        shift = false;
+    else if (!(scancode & 0x80))
+        putchar(keyboard_layout[shift][scancode]);
 }

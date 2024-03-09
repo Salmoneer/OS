@@ -8,7 +8,7 @@ BOOTLOAD=bootload.bin
 all: clean bootload
 
 bootload: $(BOOTLOAD_SRCS)
-	$(ASM) -f bin $^ -o $(BOOTLOAD)
+    $(ASM) -f bin $^ -o $(BOOTLOAD)
 
 clean:
-	rm -rf *.bin
+    rm -rf *.bin

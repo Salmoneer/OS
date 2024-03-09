@@ -2,88 +2,88 @@
 #include <stdio.h>
 
 void panic(char *error_msg) {
-	printf("\n\nFATAL ERROR: ");
-	printf(error_msg);
-	printf("\nSYSTEM HALTED");
-	asm volatile("cli\nhlt");
+    printf("\n\nFATAL ERROR: ");
+    printf(error_msg);
+    printf("\nSYSTEM HALTED");
+    asm volatile("cli\nhlt");
 }
 
 void int0() {
-	panic("Divide by zero");
+    panic("Divide by zero");
 }
 
 void int1() {
-	panic("Debug");
+    panic("Debug");
 }
 
 void int2() {
-	panic("NMI");
+    panic("NMI");
 }
 
 void int3() {
-	panic("Breakpoint");
+    panic("Breakpoint");
 }
 
 void int4() {
-	panic("Overflow");
+    panic("Overflow");
 }
 
 void int5() {
-	panic("Bound Range Exceeded");
+    panic("Bound Range Exceeded");
 }
 
 void int6() {
-	panic("Invalid Opcode");
+    panic("Invalid Opcode");
 }
 
 void int7() {
-	panic("Coprocessor not Available");
+    panic("Coprocessor not Available");
 }
 
 void int8() {
-	panic("Double Fault");
+    panic("Double Fault");
 }
 
 void int9() {
-	panic("Coprocessor Segment Overrun");
+    panic("Coprocessor Segment Overrun");
 }
 
 void int10() {
-	panic("Invalid TSS");
+    panic("Invalid TSS");
 }
 
 void int11() {
-	panic("Segment not Present");
+    panic("Segment not Present");
 }
 
 void int12() {
-	panic("Stack Segment Fault");
+    panic("Stack Segment Fault");
 }
 
 void int13() {
-	panic("General Protection Fault");
+    panic("General Protection Fault");
 }
 
 void int14() {
-	panic("Page Fault");
+    panic("Page Fault");
 }
 
 void int15() {
-	panic("RESERVED");
+    panic("RESERVED");
 }
 
 void int16() {
-	panic("FPU Floating Point Error");
+    panic("FPU Floating Point Error");
 }
 
 void int17() {
-	panic("Alignment Check");
+    panic("Alignment Check");
 }
 
 void int18() {
-	panic("Machine Check");
+    panic("Machine Check");
 }
 
 void int19() {
-	panic("SIMD Floating Point Exception");
+    panic("SIMD Floating Point Exception");
 }

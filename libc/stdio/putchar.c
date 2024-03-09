@@ -6,7 +6,7 @@
 
 int putchar(char c) {
 #if defined (__is_libk)
-	terminal_putc(c);
-	return c;
+    terminal_putc(c);
+    return c;
 #endif
 }

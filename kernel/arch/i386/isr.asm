@@ -2,14 +2,14 @@
 extern int%1
 global intw%1
 intw%1:
-	pushad
-	mov eax, 0x10
-	mov ds, eax
-	mov es, eax
-	cld
-	call int%1
-	popad
-	iret
+    pushad
+    mov eax, 0x10
+    mov ds, eax
+    mov es, eax
+    cld
+    call int%1
+    popad
+    iret
 %endmacro
 
 INTWRAP 0

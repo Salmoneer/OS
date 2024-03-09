@@ -10,20 +10,20 @@ OBJS=stdio/printf.o stdio/putchar.o stdio/puts.o
 all: clean libk.a install
 
 libk.a: $(OBJS)
-	$(AR) -crs $@ $(OBJS)
+    $(AR) -crs $@ $(OBJS)
 
 .c.o:
-	$(CC) -MD -c $< -o $@ $(CCFLAGS)
+    $(CC) -MD -c $< -o $@ $(CCFLAGS)
 
 install:
-	mkdir -p ../sysroot/usr/include
-	cp -r include/. ../sysroot/usr/include/.
-	mkdir ../sysroot/usr/lib
-	cp libk.a ../sysroot/usr/lib/
+    mkdir -p ../sysroot/usr/include
+    cp -r include/. ../sysroot/usr/include/.
+    mkdir ../sysroot/usr/lib
+    cp libk.a ../sysroot/usr/lib/
 
 clean:
-	rm -rf ../sysroot
-	rm -f libk.a
-	find . \( -name '*.o' -or -name '*.d' \) -delete
+    rm -rf ../sysroot
+    rm -f libk.a
+    find . \( -name '*.o' -or -name '*.d' \) -delete
 
 -include $(OBJS:.o=.d)
