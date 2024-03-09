@@ -4,7 +4,7 @@
 ; BIOS Parameter Block (BPB)
 jmp short bootload_start
 nop
-BPBOEMLabeldb "BOOTDRIV"
+BPBOEMLabel             db "BOOTDRIV"
 BPBBytesPerSector       dw 512
 BPBSectorsPerCluster    db 1
 BPBReservedSectors      dw 1
