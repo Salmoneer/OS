@@ -5,24 +5,25 @@
 idtr IDTR;
 interrupt IDT[256];
 
-void idt_load() {
-    IDTR.limit  = 256*(sizeof(interrupt)-1);
-    IDTR.base   = IDT;
-
-    asm volatile("LIDT (%0) ": :"g" (IDTR));
-}
-
-void idt_add_interrupt(int number, void (*handler)()) {
+void idt_add_interrupt(int index, void (*handler)()) {
     uint16_t selector = 0x08;
     uint32_t offset = (uint32_t)handler;
 
-    asm volatile("movw %%cs,%0" :"=g"(selector));
+    IDT[index].offset_low   = (offset & 0xFFFF);
+    IDT[index].selector     = selector;
+    IDT[index].settings     = INT_OPTS_R0;
+    IDT[index].offset_high  = (offset >> 16);
+    IDT[index].zero         = 0;
+}
 
-    IDT[number].offset_low   = (offset & 0xFFFF);
-    IDT[number].selector     = selector;
-    IDT[number].settings     = INT_OPTS_R0;
-    IDT[number].offset_high  = (offset >> 16);
-    IDT[number].zero         = 0;
+void idt_load() {
+    IDTR.limit  = 256 * (sizeof(interrupt) - 1);
+    IDTR.base   = IDT;
+
+    asm volatile("LIDT (%0)"
+        :
+        : "g" (IDTR)
+    );
 }
 
 void idt_init() {

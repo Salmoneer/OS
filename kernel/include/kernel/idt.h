@@ -19,8 +19,9 @@ typedef struct {
     interrupt *base;
 } __attribute__ ((packed)) idtr;
 
-void idt_load();
 void idt_add_interrupt(int number, void (*handler)());
+void idt_load();
+
 void idt_init();
 
 #endif
