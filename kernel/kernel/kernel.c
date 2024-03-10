@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <kernel/io.h>
-#include <kernel/tty.h>
-#include <kernel/idt.h>
-#include <kernel/pic.h>
-#include <drivers/pci.h>
+#include "kernel/io.h"
+#include "kernel/tty.h"
+#include "kernel/idt.h"
+#include "kernel/pic.h"
+#include "drivers/pci.h"
 
 void kernel_main() {
     terminal_initialize();
